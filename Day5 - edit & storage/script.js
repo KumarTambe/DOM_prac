@@ -1,9 +1,9 @@
 let savedNumbers = localStorage.getItem("savedNumbers")
 let arr;
-if(savedNumbers){
-    arr = JSON.parse(savedNumbers)
+if (savedNumbers) {
+  arr = JSON.parse(savedNumbers)
 } else {
-    arr = [32, 67, 27, 19, 10, 78];
+  arr = [32, 67, 27, 19, 10, 78];
 }
 
 
@@ -20,13 +20,13 @@ let descBtn = document.querySelector(".descBtn");
 
 function showUI(dataToDisplay) {
   list.innerHTML = "";
-  
-  for(let i = 0; i < dataToDisplay.length; i++) {
+
+  for (let i = 0; i < dataToDisplay.length; i++) {
     let val = dataToDisplay[i];
     let element = document.createElement('li');
     let delbtn = document.createElement('button');
     let editbtn = document.createElement('button');
-    
+
     editbtn.innerText = "Edit"
     delbtn.innerText = "Delete";
     element.innerText = val;
@@ -34,34 +34,34 @@ function showUI(dataToDisplay) {
     element.append(editbtn);
     list.append(element);
 
-    if(val > 50){
-      element.style.color = 'red'
-    }
-    
-//delete button
-    delbtn.addEventListener('click', function() {
-      let targetIndex= arr.indexOf(val);
+    // if(val > 50){
+    //   element.style.color = 'red'
+    // }
+
+    //delete button
+    delbtn.addEventListener('click', function () {
+      let targetIndex = arr.indexOf(val);
       arr.splice(targetIndex, 1);
-      runSearch(); 
+      runSearch();
     });
-    
-//edit button
-    editbtn.addEventListener('click',function(){
-        let newVal = prompt('Enter the value you want to edit')
-        let targetIndex = arr.indexOf(val);
-        if(newVal){
-          let newNumber = Number(newVal)
-          if(!isNaN(newNumber)){
-            let foundIndex = arr.indexOf(newNumber)
-            if(foundIndex != -1 && foundIndex != targetIndex){
-              alert("Number already exists")
-              return;
-            } else {
-              arr[targetIndex] = newNumber
-              runSearch()
-            }
+
+    //edit button
+    editbtn.addEventListener('click', function () {
+      let newVal = prompt('Enter the value you want to edit')
+      let targetIndex = arr.indexOf(val);
+      if (newVal) {
+        let newNumber = Number(newVal)
+        if (!isNaN(newNumber)) {
+          let foundIndex = arr.indexOf(newNumber)
+          if (foundIndex != -1 && foundIndex != targetIndex) {
+            alert("Number already exists")
+            return;
+          } else {
+            arr[targetIndex] = newNumber
+            runSearch()
           }
         }
+      }
     })
   }
 }
@@ -69,25 +69,25 @@ function showUI(dataToDisplay) {
 // adv show array
 function runSearch() {
   let searchInput = search.value;
-  let filteredData = arr.filter(item => 
+  let filteredData = arr.filter(item =>
     item.toString().includes(searchInput)
   );
-  localStorage.setItem("savedNumbers",JSON.stringify(arr))
+  localStorage.setItem("savedNumbers", JSON.stringify(arr))
   showUI(filteredData);
 }
 
 // normal show array
-display.addEventListener('click',function(){
+display.addEventListener('click', function () {
   showUI(arr);
 })
 
 //add button
-addbtn.addEventListener('click',function add(){
+addbtn.addEventListener('click', function add() {
   let value = userInput.value;
-  if(value){
+  if (value) {
     let newNumber = Number(value)
-    if(!isNaN(newNumber)){
-      if(arr.includes(newNumber)){
+    if (!isNaN(newNumber)) {
+      if (arr.includes(newNumber)) {
         alert("Number already in array")
         return;
       } else {
@@ -99,30 +99,30 @@ addbtn.addEventListener('click',function add(){
 })
 
 // search
-search.addEventListener('input', function(){
+search.addEventListener('input', function () {
   runSearch();
 })
 
 //show even button
-evenbtn.addEventListener('click',function even(){
+evenbtn.addEventListener('click', function even() {
   let EvenArr = arr.filter(item => item % 2 == 0)
   showUI(EvenArr)
 })
 
 // show odd button
-oddbtn.addEventListener('click',function odd(){
+oddbtn.addEventListener('click', function odd() {
   let OddArr = arr.filter(item => item % 2 != 0)
   showUI(OddArr)
 })
 
 //sorting buttons
 
-ascBtn.addEventListener('click',function(){
-  arr.sort((a,b) => a-b)
+ascBtn.addEventListener('click', function () {
+  arr.sort((a, b) => a - b)
   runSearch()
 })
-descBtn.addEventListener('click',function(){
-  arr.sort((a,b)=> b-a)
+descBtn.addEventListener('click', function () {
+  arr.sort((a, b) => b - a)
   runSearch()
 })
 
