@@ -7,24 +7,19 @@ let inventory = [
 
 let shopContainer = document.getElementById("shopContainer");
 let totalDisplay = document.getElementById("totalPrice");
+let input = document.getElementById("searchInput");
 
 function updateApp(searchText, selectedCategory) {
 
-    // 🧱 STEP 1: FILTER (The Bouncer)
-    // Check two things: 
-    // 1. Does item.category === selectedCategory? (Or is selectedCategory === "All"?)
-    // 2. Does item.name.toLowerCase().includes(searchText.toLowerCase())?
     let filteredItems = inventory.filter(item =>
-        _____________________________________________
+        (selectedCategory === "All" || item.category === selectedCategory) &&
+        item.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    // 🧱 STEP 2: REDUCE (The Snowball)
-    // Use .reduce() on your new `filteredItems` array to get the total price.
-    let calculatedTotal = filteredItems.reduce(___________________);
+    let calculatedTotal = filteredItems.reduce((total, item) => total + item.price, 0);
     totalDisplay.innerText = calculatedTotal;
 
-    // 🧱 STEP 3: MAP & JOIN (The Assembly Line)
-    // Use .map() on your `filteredItems` array to wrap them in <li> tags, 
-    // join them, and inject them into the shopContainer.innerHTML
-    shopContainer.innerHTML = filteredItems.map(___________________).join('');
+    shopContainer.innerHTML = filteredItems
+        .map(item => `<li>${item.name} - $${item.price}</li>`)
+        .join('');
 }
